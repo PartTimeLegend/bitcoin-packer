@@ -1,0 +1,55 @@
+{
+    "variables": {
+        "aws_region":         "{{env `AWS_REGION`}}",
+        "aws_build_vpc":      "{{env `AWS_BUILD_VPC`}}",
+        "aws_build_subnet":   "{{env `AWS_BUILD_SUBNET`}}",
+        "aws_public_ip":      "{{env `AWS_PUBLIC_IP`}}",
+        "aws_instance_type":  "t2.micro",
+        "aws_user":           "centos",
+        "distribution":       "",
+        "ssh_pty":            "true",
+        "unique_id":          "{{ uuid }}",
+        "aws_source_ami":     "ami-6d1c2007",
+        "aws_profile": "{{env `AWS_PROFILE`}}",
+        "aws_keypair_name": "{{env `AWS_KEYPAIR_NAME`}}",
+        "aws_private_key_file": "{{env `AWS_PRIVATE_KEY_FILE`}}"
+    },
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "name": "bitcoincore-centos",
+            "ami_name": "bitcoincore-centos",
+            "communicator": "ssh",
+            "region": "{{ user `aws_region` }}",
+            "vpc_id": "{{ user `aws_build_vpc` }}",
+            "subnet_id": "{{ user `aws_build_subnet` }}",
+            "associate_public_ip_address": "{{user `aws_public_ip`}}",
+            "instance_type": "{{ user `aws_instance_type` }}",
+            "source_ami": "{{ user `aws_source_ami` }}",           
+            "ssh_username": "{{user `aws_user`}}",
+            "ssh_pty": "{{user `ssh_pty` }}",
+            "ssh_keypair_name" : "{{user `aws_keypair_name`}}",
+            "ssh_private_key_file": "{{user `aws_private_key_file`}}",
+            "run_tags": {
+                "Name": "packer-builder-{{ user `role` }}-{{ user `distribution` }}",
+                "UUID": "{{ user `unique_id`}}"
+            },
+            "tags": { "Name": "{{ user `role` }}-{{ user `distribution` }}" },
+            "iam_instance_profile": "{{user `aws_iam_instance_profile`}}",
+            "token": "{{user `aws_session_token`}}",
+            "profile": "{{ user `aws_profile`}}",
+            "ssh_timeout": "20m" 
+        }
+        ],
+
+        "provisioners": [
+        {
+            "type": "shell",
+            "scripts": 
+                [ 
+                    "sh/install/yum-dependancies.sh",
+                    "sh/install/bitcoincore.sh"
+                ]
+        }
+    ]
+}
