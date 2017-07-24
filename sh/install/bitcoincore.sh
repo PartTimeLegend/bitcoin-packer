@@ -9,4 +9,4 @@ sudo cp bitcoin-cli /usr/bin/bitcoin-cli
 sudo cp bitcoin-qt /usr/bin/bitcoin-qt
 sudo cp bitcoin-qt /usr/bin/bitcoin-qt
 sudo cp bitcoin-qt /usr/bin/bitcoin-qt
-ls -ld /usr/bin/[ac]* | grep ^- | tr -s ' ' | cut -d' ' -f9
+ls -ld /usr/bin/[bitcoin]* | grep ^- | tr -s ' ' | cut -d' ' -f9
