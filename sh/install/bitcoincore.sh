@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 echo "Downloading bitcoin"
-wget https://bitcoin.org/bin/bitcoin-core-0.14.2/bitcoin-0.14.2-x86_64-linux-gnu.tar.gz
-tar -xvzf bitcoin-0.14.2-x86_64-linux-gnu.tar.gz
-cd bitcoin-0.14.2
+wget https://bitcoin.org/bin/bitcoin-core-0.15.1/bitcoin-0.15.1-x86_64-linux-gnu.tar.gz
+tar -xvzf bitcoin-0.15.1-x86_64-linux-gnu.tar.gz
+cd bitcoin-0.15.1
 cd bin
 echo "Listing Contents of extracted bin"
 ls
